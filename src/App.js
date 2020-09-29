@@ -6,6 +6,7 @@ import './App.css';
 class App extends React.Component {
   state = {
     croppedImages: [],
+    src: require("./images/image.png"),
     crop: {
       unit: "%",
       x: 38,
@@ -15,10 +16,29 @@ class App extends React.Component {
     }
   };
 
+  componentDidMount() {
+    var imageloaded = localStorage.getItem("imageloaded");
+    imageloaded && this.setState({ src: "data:image/png;base64," + imageloaded });
+  }
+
   // If you setState the crop in here you should return false.
   onImageLoaded = (image) => {
     this.imageRef = image;
+    localStorage.setItem("imageloaded", this.getBase64Image(this.imageRef));
   };
+
+  getBase64Image = (img) => {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  }
 
   onCropComplete = (crop) => {
     this.makeClientCrop(crop);
@@ -84,13 +104,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { crop, croppedImageUrl, croppedImages } = this.state;
+    const { src, crop, croppedImageUrl, croppedImages } = this.state;
 
     return (
       <div className="card">
         <div className="main_content">
           <ReactCrop
-            src={require("./images/image.png")}
+            src={src}
             crop={crop}
             onImageLoaded={this.onImageLoaded}
             onComplete={this.onCropComplete}
