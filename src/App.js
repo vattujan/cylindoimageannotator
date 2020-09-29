@@ -95,18 +95,18 @@ class App extends React.Component {
           />
         </div>
         <div className="side_content">
+          <div className="add_button">
+            <img alt="cropping" src={croppedImageUrl} />
+            <button onClick={this.addCroppedImage}>
+              <img alt="add" src={require("./images/add.png")} />
+            </button>
+          </div>
           {croppedImages.map((ci, i) => (
             <div key={i} className="row">
               <img alt="cropped" src={ci} />
               <h3>Shot {i + 1}</h3>
             </div>
-          ))}
-          <img alt="cropping" src={croppedImageUrl} />
-          <div className="add_button">
-            <button onClick={this.addCroppedImage}>
-              <img alt="add" src={require("./images/add.png")} />
-            </button>
-          </div>
+          )).reverse()}
         </div>
       </div>
     );
