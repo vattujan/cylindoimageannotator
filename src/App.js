@@ -30,8 +30,11 @@ class App extends React.Component {
 
   addCroppedImage = (crop) => {
     // this.state.croppedImages.push(this.state.croppedImageUrl);
-    this.setState({ croppedImages: this.state.croppedImages.concat(this.state.croppedImageUrl) })
+    this.setState({ croppedImages: this.state.croppedImages.concat(this.state.croppedImageUrl) });
     this.onCropComplete(crop);
+  }
+  removeCroppedImage = (i) => {
+    this.setState({ croppedImages: this.state.croppedImages.filter((item, j) => i !== j) });
   }
 
   async makeClientCrop(crop) {
@@ -103,7 +106,9 @@ class App extends React.Component {
           </div>
           {croppedImages.map((ci, i) => (
             <div key={i} className="row">
-              <img alt="cropped" src={ci} />
+              <button onClick={() => this.removeCroppedImage(i)}>
+                <img alt="cropped" src={ci} />
+              </button>
               <h3>Shot {i + 1}</h3>
             </div>
           )).reverse()}
