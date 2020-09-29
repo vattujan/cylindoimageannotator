@@ -24,16 +24,15 @@ class App extends React.Component {
   // If you setState the crop in here you should return false.
   onImageLoaded = (image) => {
     this.imageRef = image;
-    localStorage.setItem("imageloaded", this.getBase64Image(this.imageRef));
+    localStorage.setItem("imageloaded", this.getBase64Image(image));
   };
 
   getBase64Image = (img) => {
     var canvas = document.createElement("canvas");
     canvas.width = img.width;
     canvas.height = img.height;
-
     var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
+    ctx.drawImage(img, 0, 0, img.width, img.height);
 
     var dataURL = canvas.toDataURL("image/png");
 
