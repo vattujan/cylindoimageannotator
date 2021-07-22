@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import './App.css';
